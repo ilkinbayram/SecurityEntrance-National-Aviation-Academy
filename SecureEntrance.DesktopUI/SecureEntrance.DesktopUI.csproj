@@ -77,7 +77,6 @@
     <Compile Include="Entities\LogProcess.cs" />
     <Compile Include="Entities\LogSystem.cs" />
     <Compile Include="Entities\Passenger.cs" />
-    <Compile Include="Entities\TestModel.cs" />
     <Compile Include="Entities\UnlawfulAct.cs" />
     <Compile Include="Entities\Worker.cs" />
     <Compile Include="EntityFramework\MyInitializer.cs" />

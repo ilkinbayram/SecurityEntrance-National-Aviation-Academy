@@ -1,4 +1,5 @@
 ﻿using SecureEntrance.DesktopUI.DesktopUI_Entities;
+using SecureEntrance.DesktopUI.Entities;
 using SecureEntrance.DesktopUI.Managers;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,8 @@ namespace SecureEntrance.DesktopUI
             CurrentFormManager.FormEntrance = this;
             InitializeComponent();
         }
+
+        LogSystemManager logSysMan = new LogSystemManager();
 
 
         private void FormEntrancePage_Load(object sender, EventArgs e)
@@ -187,6 +190,13 @@ namespace SecureEntrance.DesktopUI
             FormAppLogin appLogin = new FormAppLogin();
             appLogin.Show();
             this.Hide();
+        }
+
+        private void FormEntrancePage_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            LogSystem logSystem = logSysMan.ListAll(x => x.SerieWorkerID == CurrentModel.SerieWorkerID).OrderByDescending(x => x.WorkerEntered).FirstOrDefault();
+            logSystem.WorkerExited = DateTime.Now;
+            logSysMan.Update(logSystem);
         }
     }
 }

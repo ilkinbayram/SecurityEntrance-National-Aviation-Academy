@@ -27,7 +27,7 @@ namespace SecureEntrance.DesktopUI
         Worker worker = null;
         private void FormAppLogin_Load(object sender, EventArgs e)
         {
-            
+
         }
 
         private void FormAppLogin_FormClosing(object sender, FormClosingEventArgs e)
@@ -41,20 +41,23 @@ namespace SecureEntrance.DesktopUI
             string passwordWorker = tbxPassword.Text;
             worker = workerManager.Get(x => x.IdentitySerie == userID);
 
-            if (worker!=null)
+            if (worker != null)
             {
                 if (CryptoHelper.Crypto.VerifyHashedPassword(worker.Password, passwordWorker))
                 {
                     CurrentModel.SerieWorkerID = worker.IdentitySerie;
-                    LogSystem logSystem = new LogSystem
+                    if (logSystemManager.Get(x => x.WorkerEntered.AddDays(1) > DateTime.Now && x.SerieWorkerID == CurrentModel.SerieWorkerID) == null)
                     {
-                        CountryID = CurrentModel.CountryID,
-                        IsDeleted = false,
-                        SerieWorkerID = CurrentModel.SerieWorkerID,
-                        WorkerEntered = DateTime.Now,
-                        WorkerExited = DateTime.Now
-                    };
-                    logSystemManager.Insert(logSystem);
+                        LogSystem logSystemNew = new LogSystem
+                        {
+                            CountryID = CurrentModel.CountryID,
+                            IsDeleted = false,
+                            SerieWorkerID = CurrentModel.SerieWorkerID,
+                            WorkerEntered = DateTime.Now,
+                            WorkerExited = DateTime.Now
+                        };
+                        logSystemManager.Insert(logSystemNew);
+                    }
                     FormWorkPanel workPanel = new FormWorkPanel();
                     workPanel.Show();
                     this.Hide();
@@ -66,7 +69,7 @@ namespace SecureEntrance.DesktopUI
             }
             else
             {
-                MessageBox.Show("Qeyd Etdiyiniz Agent Movcud Deyil !","Login Informasiyasi",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show("Qeyd Etdiyiniz Agent Movcud Deyil !", "Login Informasiyasi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

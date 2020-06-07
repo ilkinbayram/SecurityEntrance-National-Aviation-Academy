@@ -335,6 +335,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormEntrancePage";
             this.Text = "SECURE ENTRANCE APLICATION";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormEntrancePage_FormClosing);
             this.Load += new System.EventHandler(this.FormEntrancePage_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

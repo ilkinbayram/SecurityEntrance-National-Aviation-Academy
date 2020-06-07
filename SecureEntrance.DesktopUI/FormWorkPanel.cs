@@ -24,6 +24,7 @@ namespace SecureEntrance.DesktopUI
 
         PassengerManager passengerManager = new PassengerManager();
         CountryManager countryManager = new CountryManager();
+        LogSystemManager logSysMan = new LogSystemManager();
         LogProcessManager logm = new LogProcessManager();
         private void FormWorkPanel_Load(object sender, EventArgs e)
         {
@@ -141,6 +142,9 @@ namespace SecureEntrance.DesktopUI
 
         private void FormWorkPanel_FormClosing(object sender, FormClosingEventArgs e)
         {
+            LogSystem logSystem = logSysMan.ListAll(x=>x.SerieWorkerID==CurrentModel.SerieWorkerID).OrderByDescending(x=>x.WorkerEntered).FirstOrDefault();
+            logSystem.WorkerExited = DateTime.Now;
+            logSysMan.Update(logSystem);
             Application.Exit();
         }
     }
