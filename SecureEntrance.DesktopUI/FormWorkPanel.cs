@@ -38,6 +38,7 @@ namespace SecureEntrance.DesktopUI
 
         private void btnCheckUserExist_Click(object sender, EventArgs e)
         {
+            pcbSuccess.Visible = false;
             string passengerID = tbxUserSecureNumber.Text;
             Passenger passenger = passengerManager.Get(x => x.IdentitySerie == passengerID);
             if (passenger == null)
@@ -131,6 +132,7 @@ namespace SecureEntrance.DesktopUI
 
         private void btnClear_Click(object sender, EventArgs e)
         {
+            tbxUserSecureNumber.Text = "";
             CurrentModel.Passenger = null;
             CurrentModel.GoingCountryID = -1;
             rbtnIsChecked.Text = "YOXLANILMAYIB";
@@ -146,6 +148,11 @@ namespace SecureEntrance.DesktopUI
             logSystem.WorkerExited = DateTime.Now;
             logSysMan.Update(logSystem);
             Application.Exit();
+        }
+
+        private void tbxUserSecureNumber_MouseClick(object sender, MouseEventArgs e)
+        {
+            pcbSuccess.Visible = false;
         }
     }
 }

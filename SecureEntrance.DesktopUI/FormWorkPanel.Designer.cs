@@ -75,6 +75,7 @@
             this.tbxUserSecureNumber.Name = "tbxUserSecureNumber";
             this.tbxUserSecureNumber.Size = new System.Drawing.Size(233, 20);
             this.tbxUserSecureNumber.TabIndex = 1;
+            this.tbxUserSecureNumber.MouseClick += new System.Windows.Forms.MouseEventHandler(this.tbxUserSecureNumber_MouseClick);
             this.tbxUserSecureNumber.TextChanged += new System.EventHandler(this.tbxUserSecureNumber_TextChanged);
             // 
             // lbIUserSecureNumber

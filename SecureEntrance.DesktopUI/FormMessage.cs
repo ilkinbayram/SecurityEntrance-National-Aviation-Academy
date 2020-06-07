@@ -39,7 +39,7 @@ namespace SecureEntrance.DesktopUI
 
         private void FormMessage_FormClosing(object sender, FormClosingEventArgs e)
         {
-            CurrentFormManager.FormEntrance.Show();
+            CurrentFormManager.FormWorkOn.Show();
         }
     }
 }

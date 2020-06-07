@@ -1,4 +1,5 @@
-﻿using SecureEntrance.DesktopUI.DesktopUI_Entities;
+﻿using FakeData;
+using SecureEntrance.DesktopUI.DesktopUI_Entities;
 using SecureEntrance.DesktopUI.Entities;
 using SecureEntrance.DesktopUI.Managers;
 using System;
@@ -46,7 +47,11 @@ namespace SecureEntrance.DesktopUI
                 if (CryptoHelper.Crypto.VerifyHashedPassword(worker.Password, passwordWorker))
                 {
                     CurrentModel.SerieWorkerID = worker.IdentitySerie;
-                    if (logSystemManager.Get(x => x.WorkerEntered.AddDays(1) > DateTime.Now && x.SerieWorkerID == CurrentModel.SerieWorkerID) == null)
+                    var today = DateTime.Now;
+                    List<LogSystem> logSysList = logSystemManager.ListAll(x => x.WorkerEntered.Year == today.Year && x.WorkerEntered.Month == today.Month && x.WorkerEntered.Day == today.Day);
+                    LogSystem currentLog = logSysList.Where(x => x.SerieWorkerID == CurrentModel.SerieWorkerID).OrderByDescending(x=>x.WorkerEntered).FirstOrDefault();
+
+                    if (currentLog == null)
                     {
                         LogSystem logSystemNew = new LogSystem
                         {
